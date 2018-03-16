@@ -8,18 +8,13 @@
         android:title="@string/action_settings"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_listCars"
-        android:orderInCategory="100"
-        android:title="@string/action_listCars"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/action_Search"
         android:orderInCategory="100"
         android:title="@string/action_Search"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item
         android:id="@+id/action_AddCar"
         android:orderInCategory="100"
         android:title="@string/add_car"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

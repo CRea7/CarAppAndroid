@@ -12,20 +12,20 @@ public class ListActivity extends AppCompatActivity{
 
     Toolbar mToolbar;
     TextView textView;
-    TextView textColour;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_listclick);
+        textView = findViewById(R.id.listItem);
 
-//        textView = findViewById(R.id.textView3);
-//        String TempHolder = getIntent().getStringExtra(test);
-//        textView.setText(TempHolder);
-//
-//        textColour = findViewById(R.id.textView9);
-//        String What = getIntent().getStringExtra("cars.carColour");
-//        textColour.setText(What);
+        Bundle bundle = getIntent().getExtras();
+        if(bundle != null)
+        {
+            textView.setText(bundle.getString("Car Name"));
+        }
+
 
         mToolbar = findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);

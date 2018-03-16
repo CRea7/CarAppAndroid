@@ -1,16 +1,19 @@
 package ie.app.carapp.models;
 
-public class User {
+
+
+public class admin {
+
     private String name;
     private String password;
     private String email;
     private String phone;
     private int auth;
 
-    public User() {
+    public admin() {
     }
 
-    public User(String name, String password, String email, String phone, int auth) {
+    public admin(String name, String password, String email, String phone, int auth) {
         this.name = name;
         this.password = password;
         this.email = email;
@@ -60,7 +63,7 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" +
+        return "admin{" +
                 "name='" + name + '\'' +
                 ", password='" + password + '\'' +
                 ", email='" + email + '\'' +

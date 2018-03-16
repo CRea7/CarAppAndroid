@@ -1,8 +1,6 @@
 package ie.app.carapp.Activity;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -15,14 +13,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ie.app.carapp.Activity.CustomListview;
-import ie.app.carapp.Activity.SearchActivity;
 import ie.app.carapp.R;
 import ie.app.carapp.models.Car;
 
@@ -30,15 +30,18 @@ import ie.app.carapp.models.Car;
 
 public class MainActivity extends AppCompatActivity {
 
-    ListView List;
-    private Button searchButton;
+    private ListView List;
     public List<Car> cars;
+    private DatabaseReference mDatabase;
+    private FirebaseDatabase db;
+    private ArrayList<String> list;
+    private ArrayAdapter<String> adapter;
+    Car car;
 
-    DatabaseReference mRootRef = FirebaseDatabase.getInstance().getReference();
+    private ArrayList<String> FirebaseCars = new ArrayList<>();
+    private ArrayList<String> Keys = new ArrayList<>();
 
 
-   // ArrayAdapter<String> adapter;
-    //ArrayList<String> arrayList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,26 +50,40 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        cars = new ArrayList<>();
-        Car test = new Car("nissan", "testColour", "TestDes", 1);
-        Car test2 = new Car("Chevy", "testColour2", "TestDes2", 2);
-        Log.i("Cars", test.getCarname());
-        cars.add(test);
-        cars.add(test2);
-
-
+        car = new Car();
+        list = new ArrayList<>();
+        db = FirebaseDatabase.getInstance();
+        mDatabase = db.getReference("Car");
         List = findViewById(R.id.listview);
-        CustomListview adapter = new CustomListview(this, cars);
-        List.setAdapter(adapter);
-        List.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    car = ds.getValue(Car.class);
+                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
+                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
+
+                    String key = ds.getKey();
+                }
+                List.setAdapter(adapter);
+            }
 
             @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //sends data to the list activity so it can be displayed
+        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Car car = cars.get(i);
-                String test = car.getCarname();
                 Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra(test, List.getItemAtPosition(i).toString());
-                intent.putExtra("cars.carColour", List.getItemAtPosition(i).toString());
+                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
                 startActivity(intent);
             }
         });
@@ -79,7 +96,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    public void remove(Car cars){
 
+    }
+
+    //this is what allows the menu to work
     @Override
     public boolean onOptionsItemSelected(MenuItem item)
     {
@@ -93,25 +114,4 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected void onStart(){
-        super.onStart();
-
-        DatabaseReference carRef = mRootRef.child("");
-    }
-
-    /*@Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 }

@@ -25,4 +25,6 @@
     <string name="AddSubColour">Car colour</string>
     <string name="AddSubDes">Car description</string>
     <string name="AddButtonAdd">List your car</string>
+    <string name="FirebaseBtn">Click to add</string>
+    <string name="ListClickText">placeholder</string>
 </resources>
