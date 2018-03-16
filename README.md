@@ -26,5 +26,5 @@ all fields are filled in. when all fields are filled in you can click add and yo
  https://developer.android.com/index.html
  https://stackoverflow.com/questions/22144891/how-to-add-listview-items-on-button-click-using-adapter
  https://ddrohan.github.io/wit-mad-1-2018/labwall.html
- 
+ https://androidkennel.org/passing-data-between-activities-using-intents-android-tutorial/
  
