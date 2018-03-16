@@ -1,0 +1,28 @@
+<resources>
+    <string name="app_name">Motor Mate</string>
+    <string name="action_settings">Settings</string>
+    <string name="MainWelcome">Welcome to (appName)</string>
+    <string name="MainSearch">Search</string>
+    <string name="ListCname">CarName1</string>
+    <string name="ListColour">CarColour1</string>
+    <string name="ListDes">ShortDes1</string>
+    <string name="menu_action_setting">settings</string>
+    <string name="menu_action_aboutus">about us</string>
+    <string name="action_listCars">List of cars</string>
+    <string name="action_Search">Search</string>
+    <string name="search_search">Search</string>
+    <string name="search_title">What are you looking for?</string>
+    <string name="Main_Search">Search</string>
+    <string name="List_Name">Car name</string>
+    <string name="List_Colour">Car colour</string>
+    <string name="List_Des">Description</string>
+    <string name="ListClickName">CarName</string>
+    <string name="ListClickColour">CarColour</string>
+    <string name="LictClickDes">CarDes</string>
+    <string name="add_car">Add Car</string>
+    <string name="AddTitle">List your car here</string>
+    <string name="AddSubName">Car name</string>
+    <string name="AddSubColour">Car colour</string>
+    <string name="AddSubDes">Car description</string>
+    <string name="AddButtonAdd">List your car</string>
+</resources>

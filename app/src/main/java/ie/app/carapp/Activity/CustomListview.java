@@ -1,0 +1,57 @@
+package ie.app.carapp.Activity;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import java.util.List;
+
+import ie.app.carapp.R;
+import ie.app.carapp.models.Car;
+
+
+public class CustomListview extends ArrayAdapter<Car>{
+
+
+    private Context        context;
+    public List<Car>        cars;
+
+    public CustomListview(Context context, List<Car> cars)
+    {
+        super(context, R.layout.layout, cars);
+        this.context   = context;
+        this.cars = cars;
+    }
+
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        View     view       = inflater.inflate(R.layout.layout, parent, false);
+        Car car   = cars.get(position);
+        TextView nameView = view.findViewById(R.id.textViewCar);
+        TextView colourView = view.findViewById(R.id.textViewColour);
+        TextView desView = view.findViewById(R.id.textViewDes);
+        ImageView carImage = view.findViewById(R.id.imageViewList);
+
+
+        nameView.setText(car.getCarname());
+        colourView.setText(car.getCarColour());
+        desView.setText(car.getDes());
+
+        return view;
+    }
+
+    @Override
+    public int getCount()
+    {
+        return cars.size();
+    }
+}
+
