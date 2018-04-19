@@ -16,5 +16,11 @@
         android:id="@+id/action_AddCar"
         android:orderInCategory="100"
         android:title="@string/add_car"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_SignIn"
+        android:orderInCategory="100"
+        android:title="@string/add_SignIn"
         app:showAsAction="always" />
 </menu>

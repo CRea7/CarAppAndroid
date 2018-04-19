@@ -27,4 +27,5 @@
     <string name="AddButtonAdd">List your car</string>
     <string name="FirebaseBtn">Click to add</string>
     <string name="ListClickText">placeholder</string>
+    <string name="add_SignIn">Sign In</string>
 </resources>

@@ -91,27 +91,5 @@ public class AddActivity extends AppCompatActivity{
             }
             }
         });
-//        addButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String Cname = null;
-//                String Ccolour = null;
-//                String Cdes = null;
-//                if (addCar != null && addColour != null && addDes != null) {
-//
-//                    Cname = addCar.getText().toString();
-//                    Ccolour = addColour.getText().toString();
-//                    Cdes = addDes.getText().toString();
-//
-//                } else
-//                {
-//
-//                }
-//
-//                Car car = new Car(Cname, Ccolour, Cdes, 0);
-//                cars.add(car);
-//                Log.i("Cars", car.getCarname());
-//            }
-//        });
     }
 }
