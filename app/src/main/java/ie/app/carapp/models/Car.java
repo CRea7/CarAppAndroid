@@ -15,6 +15,12 @@ public class Car {
 
     }
 
+    public Car(String carname, String carMake, String carYear) {
+        this.carname = carname;
+        this.carMake = carMake;
+        this.carYear = carYear;
+    }
+
     public Car(String carname, String carColour, String carMake, String carYear, String carPrice, String des, int imgid) {
         this.carname = carname;
         this.carColour = carColour;

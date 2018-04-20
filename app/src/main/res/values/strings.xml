@@ -29,4 +29,7 @@
     <string name="ListClickText">placeholder</string>
     <string name="add_SignIn">Sign In</string>
     <string name="add_Logout">Log Out</string>
+    <string name="RecName">CarName</string>
+    <string name="RecMake">CarMake</string>
+    <string name="CarYear">CarYear</string>
 </resources>

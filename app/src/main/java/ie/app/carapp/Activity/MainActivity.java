@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -35,12 +37,16 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseDatabase db;
     private ArrayList<String> list;
-    private ArrayAdapter<String> adapter;
+//    private ArrayAdapter<String> adapter;
     Car car;
     private FirebaseAuth.AuthStateListener mAuthListen;
 
     private ArrayList<String> FirebaseCars = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
+
+    //testing recycler view
+    private RecyclerView recyclerView;
+    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,43 +55,63 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        car = new Car();
-        list = new ArrayList<>();
-        db = FirebaseDatabase.getInstance();
-        mDatabase = db.getReference("Car");
-        List = findViewById(R.id.listview);
-        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+//        car = new Car();
+//        list = new ArrayList<>();
+//        db = FirebaseDatabase.getInstance();
+//        mDatabase = db.getReference("Car");
+//        List = findViewById(R.id.listview);
+//        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+//
+//        mDatabase.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//                    car = ds.getValue(Car.class);
+//                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
+//                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
+//
+//                    String key = ds.getKey();
+//                }
+//                List.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onCancelled(DatabaseError databaseError) {
+//
+//            }
+//        });
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+        recyclerView = findViewById(R.id.recyclerView);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+        cars = new ArrayList<>();
 
-                    car = ds.getValue(Car.class);
-                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
-                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
+        for(int i = 0; i<=10; i++){
+            Car car = new Car(
+                    "Name " + (i+1),
+                    "Make name test",
+                    "year name test"
+            );
 
-                    String key = ds.getKey();
-                }
-                List.setAdapter(adapter);
-            }
+            cars.add(car);
+        }
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
+        adapter = new RecycAdapt(cars, this);
 
-            }
-        });
+        recyclerView.setAdapter(adapter);
 
         //sends data to the list activity so it can be displayed
-        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
-                startActivity(intent);
-            }
-        });
+//        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+//                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
+//                startActivity(intent);
+//            }
+//        });
 
     }
 
@@ -130,14 +156,14 @@ public class MainActivity extends AppCompatActivity {
         //check to see if there is a user signed in
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
         if (user != null) {
-
+            //if user is signed in it wont show sign in option
             signIn.setEnabled(false);
             signIn.setVisible(false);
 
         }
         else
         {
-
+            //if user is logged in will give them the option to log out
             logOut.setEnabled(false);
             logOut.setVisible(false);
         }
