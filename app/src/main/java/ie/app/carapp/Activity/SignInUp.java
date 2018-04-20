@@ -19,7 +19,6 @@ import ie.app.carapp.R;
 
 public class SignInUp extends AppCompatActivity {
 
-    //authentication
     private EditText mEmail;
     private EditText mPass;
     private Button mLog;
@@ -31,8 +30,6 @@ public class SignInUp extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signinup);
 
-
-        //more authenticatio
         mEmail = findViewById(R.id.SignEmail);
         mPass = findViewById(R.id.SignPass);
         mLog = findViewById(R.id.SignButton);
@@ -46,6 +43,7 @@ public class SignInUp extends AppCompatActivity {
             }
         });
 
+        //checks to see if user is signed in if they are sends them to main page
         mAuthListen = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -71,13 +69,14 @@ public class SignInUp extends AppCompatActivity {
         String email = mEmail.getText().toString();
         String pass = mPass.getText().toString();
 
+        //checks to see if fields have values in them.
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
 
             Toast.makeText(SignInUp.this, "fields are empty", Toast.LENGTH_LONG).show();
 
         }else
         {
-
+            //takes values from fields and signs the user in if it matches a registered user.
             mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {

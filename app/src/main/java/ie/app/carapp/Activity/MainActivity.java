@@ -5,23 +5,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -45,17 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> list;
     private ArrayAdapter<String> adapter;
     Car car;
+    private FirebaseAuth.AuthStateListener mAuthListen;
 
     private ArrayList<String> FirebaseCars = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
-//    //authentication
-//    private EditText mEmail;
-//    private EditText mPass;
-//    private Button mLog;
-//    private FirebaseAuth mAuth;
-//    private FirebaseAuth.AuthStateListener mAuthListen;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,39 +87,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        //more authenticatio
-//        mEmail = findViewById(R.id.SignEmail);
-//        mPass = findViewById(R.id.SignPass);
-//        mLog = findViewById(R.id.SignButton);
-//        mAuth = FirebaseAuth.getInstance();
-//
-//        mLog.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                SignIn();
-//            }
-//        });
-//
-//        mAuthListen = new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//
-//                if(firebaseAuth.getCurrentUser()== null){
-//
-//                    startActivity(new Intent(MainActivity.this, SearchActivity.class));
-//
-//                }
-//            }
-//        };
     }
-
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//
-//        mAuth.addAuthStateListener(mAuthListen);
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -143,34 +96,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    public void remove(Car cars){
-
-    }
-
-//    private void SignIn() {
-//
-//        String email = mEmail.getText().toString();
-//        String pass = mPass.getText().toString();
-//
-//        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass)) {
-//
-//            Toast.makeText(MainActivity.this, "fields are empty", Toast.LENGTH_LONG).show();
-//
-//        }else
-//            {
-//
-//            mAuth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//                @Override
-//                public void onComplete(@NonNull Task<AuthResult> task) {
-//
-//                    if (!task.isSuccessful()) {
-//                        Toast.makeText(MainActivity.this, "Sign in Problem", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            });
-//
-//        }
-//    }
 
     //this is what allows the menu to work
     @Override
@@ -184,8 +109,40 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.action_SignIn: startActivity (new Intent (this, SignInUp.class));
                 break;
+            case R.id.action_LogOut: FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(getIntent());
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem signIn = menu.findItem(R.id.action_SignIn);
+        MenuItem logOut = menu.findItem(R.id.action_LogOut);
+        MenuItem addCar = menu.findItem(R.id.action_AddCar);
+        MenuItem search = menu.findItem(R.id.action_Search);
+        MenuItem setting = menu.findItem(R.id.action_settings);
+
+        //check to see if there is a user signed in
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+
+            signIn.setEnabled(false);
+            signIn.setVisible(false);
+
+        }
+        else
+        {
+
+            logOut.setEnabled(false);
+            logOut.setVisible(false);
+        }
+
+        return true;
     }
 
 }

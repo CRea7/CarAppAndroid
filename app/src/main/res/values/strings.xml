@@ -28,4 +28,5 @@
     <string name="FirebaseBtn">Click to add</string>
     <string name="ListClickText">placeholder</string>
     <string name="add_SignIn">Sign In</string>
+    <string name="add_Logout">Log Out</string>
 </resources>
