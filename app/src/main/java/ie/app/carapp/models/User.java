@@ -1,29 +1,15 @@
 package ie.app.carapp.models;
 
 public class User {
-    private String name;
     private String password;
     private String email;
-    private String phone;
-    private int auth;
 
     public User() {
     }
 
-    public User(String name, String password, String email, String phone, int auth) {
-        this.name = name;
+    public User(String password, String email) {
         this.password = password;
         this.email = email;
-        this.phone = phone;
-        this.auth = auth;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getPassword() {
@@ -42,30 +28,13 @@ public class User {
         this.email = email;
     }
 
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
-
-    public int getAuth() {
-        return auth;
-    }
-
-    public void setAuth(int auth) {
-        this.auth = auth;
-    }
-
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
-                ", password='" + password + '\'' +
+                "password='" + password + '\'' +
                 ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", auth=" + auth +
                 '}';
     }
 }
+
+

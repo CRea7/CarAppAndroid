@@ -32,4 +32,12 @@
     <string name="RecName">CarName</string>
     <string name="RecMake">CarMake</string>
     <string name="CarYear">CarYear</string>
+    <string name="SignTitle">Sign In</string>
+    <string name="SignUp" />
+    <string name="SignBtn">Sign Up</string>
+    <string name="UpTitle">Sign Up</string>
+    <string name="UpEmail" />
+    <string name="UpPass" />
+    <string name="UpPassConf" />
+    <string name="UpComplete">Sign Up</string>
 </resources>

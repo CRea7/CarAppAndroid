@@ -2,10 +2,7 @@ package ie.app.carapp.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -37,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference mDatabase;
     private FirebaseDatabase db;
     private ArrayList<String> list;
-//    private ArrayAdapter<String> adapter;
+    private ArrayAdapter<String> adapter;
     Car car;
     private FirebaseAuth.AuthStateListener mAuthListen;
 
@@ -45,8 +43,8 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<String> Keys = new ArrayList<>();
 
     //testing recycler view
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter adapter;
+//    private RecyclerView recyclerView;
+//    private RecyclerView.Adapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,63 +53,97 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        car = new Car();
-//        list = new ArrayList<>();
+        car = new Car();
+        list = new ArrayList<>();
+        db = FirebaseDatabase.getInstance();
+        mDatabase = db.getReference("Car");
+        List = findViewById(R.id.listview);
+        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+
+                    car = ds.getValue(Car.class);
+                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
+                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
+
+                    String key = ds.getKey();
+                }
+                List.setAdapter(adapter);
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+        //This is code for a failed Recycler view to attepmt to fix the ugly UI.
+
+//        recyclerView = findViewById(R.id.recyclerView);
+//        recyclerView.setHasFixedSize(true);
+//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//
 //        db = FirebaseDatabase.getInstance();
 //        mDatabase = db.getReference("Car");
-//        List = findViewById(R.id.listview);
-//        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+//
 //
 //        mDatabase.addValueEventListener(new ValueEventListener() {
+//                                            @Override
+//                                            public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                                                cars = new ArrayList<Car>();
+//                                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+//
+//                                                    Car value = ds.getValue(Car.class);
+//                                                    Car car = new Car();
+//                                                    String name = value.getCarname();
+//                                                    String make = value.getCarMake();
+//                                                    String year = value.getCarYear();
+//                                                    car.setCarname(name);
+//                                                    car.setCarMake(make);
+//                                                    car.setCarYear(year);
+//                                                    cars.add(car);
+//                                                }
+//                                            }
+//
+//                                            @Override
+//                                            public void onCancelled(DatabaseError databaseError) {
+//
+//                                                Toast.makeText(MainActivity.this, "Error...", Toast.LENGTH_LONG).show();
+//                                            }
+//                                        });
+//
+//        adapter = new RecycAdapt(cars, this);
+//
+//        recyclerView.setAdapter(adapter);
+//
+//        recyclerView.setOnClickListener(new View.OnClickListener(){
 //            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
+//            public void onClick(View v){
 //
-//                for (DataSnapshot ds : dataSnapshot.getChildren()) {
-//
-//                    car = ds.getValue(Car.class);
-//                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
-//                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
-//
-//                    String key = ds.getKey();
-//                }
-//                List.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
+//                RecycAdapt RecyclerAdapter = new RecycAdapt(cars,MainActivity.this);
+//                RecyclerView.LayoutManager recyce = new GridLayoutManager(MainActivity.this,2);
+//                recyclerView.setLayoutManager(recyce);
+//                recyclerView.setItemAnimator( new DefaultItemAnimator());
+//                recyclerView.setAdapter(adapter);
 //            }
 //        });
 
-        recyclerView = findViewById(R.id.recyclerView);
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        cars = new ArrayList<>();
-
-        for(int i = 0; i<=10; i++){
-            Car car = new Car(
-                    "Name " + (i+1),
-                    "Make name test",
-                    "year name test"
-            );
-
-            cars.add(car);
-        }
-
-        adapter = new RecycAdapt(cars, this);
-
-        recyclerView.setAdapter(adapter);
 
         //sends data to the list activity so it can be displayed
-//        List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-//                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
-//                startActivity(intent);
-//            }
-//        });
+       List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+           @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
+               startActivity(intent);
+            }
+       });
 
     }
 
