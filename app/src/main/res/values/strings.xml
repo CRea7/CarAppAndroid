@@ -40,4 +40,6 @@
     <string name="UpPass" />
     <string name="UpPassConf" />
     <string name="UpComplete">Sign Up</string>
+    <string name="BtnDelete">Delete</string>
+    <string name="BtnDelete">Delete</string>
 </resources>

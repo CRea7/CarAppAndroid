@@ -30,4 +30,5 @@
             android:textColor="@android:color/background_dark" />
 
     </RelativeLayout>
+
 </LinearLayout>
