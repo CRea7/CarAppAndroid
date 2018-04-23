@@ -9,7 +9,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 
 
@@ -22,7 +21,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ie.app.carapp.R;
 import ie.app.carapp.models.Car;
@@ -32,7 +30,7 @@ import ie.app.carapp.models.Car;
 public class MainActivity extends AppCompatActivity {
 
     private ListView List;
-    public List<Car> cars;
+    //public List<Car> cars;
     private DatabaseReference mDatabase;
     private FirebaseDatabase db;
     private ArrayList<String> list;
@@ -59,7 +57,10 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance();
         mDatabase = db.getReference("Car");
         List = findViewById(R.id.listview);
-        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewCar, list);
+        adapter = new ArrayAdapter<String>(this, R.layout.layout, R.id.textViewMake, list);
+
+        final ArrayList<Car> cars = new ArrayList<Car>();
+        final CustomListview customListview = new CustomListview(this, cars);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -67,13 +68,19 @@ public class MainActivity extends AppCompatActivity {
 
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
 
-                    car = ds.getValue(Car.class);
-                    list.add("Car Name: " + car.getCarname().toString() + "  Car Colour: " + car.getCarColour().toString() + " Car Make: " + car.getCarMake().toString() + "  Car Year: " +
-                            car.getCarYear().toString() + " Car Price :  €" + car.getCarPrice().toString() + " Description: " + car.getDes().toString());
-
-                    String key = ds.getKey();
+                    Car value = ds.getValue(Car.class);
+                                                    Car car = new Car();
+                                                    String name = value.getCarname();
+                                                    String make = value.getCarMake();
+                                                    String year = value.getCarYear();
+                                                    String Colour = value.getCarColour();
+                                                    car.setCarname(name);
+                                                    car.setCarMake(make);
+                                                    car.setCarYear(year);
+                                                    car.setCarColour(Colour);
+                                                    cars.add(car);
                 }
-                List.setAdapter(adapter);
+                List.setAdapter(customListview);
             }
 
             @Override
@@ -137,14 +144,22 @@ public class MainActivity extends AppCompatActivity {
 
 
         //sends data to the list activity so it can be displayed
-       List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-           @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(MainActivity.this, ListActivity.class);
-                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
-               startActivity(intent);
-            }
-       });
+//       List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//           @Override
+//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                Intent intent = new Intent(MainActivity.this, ListActivity.class);
+//                intent.putExtra("Car Name", List.getItemAtPosition(i).toString());
+//               startActivity(intent);
+//            }
+//       });
+
+//        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                List.getItemAtPosition(i);
+//                return false;
+//            }
+//        });
 
 
 

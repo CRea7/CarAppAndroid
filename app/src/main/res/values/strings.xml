@@ -46,4 +46,13 @@
     <string name="addTyear">Car Year</string>
     <string name="addTprice">Price</string>
     <string name="addTcolour">Car Colour</string>
+    <string name="LayoutMake">Make:</string>
+    <string name="textViewCar">MakeHere</string>
+    <string name="LayoutModel">Model:</string>
+    <string name="textViewModel">ModelHere</string>
+    <string name="LayoutYear" />
+    <string name="textViewYear">YearHere</string>
+    <string name="LayoutColour">Colour:</string>
+    <string name="textViewColour">ColourHere</string>
+    <string name="LayOutYear">Year:</string>
 </resources>
