@@ -41,5 +41,9 @@
     <string name="UpPassConf" />
     <string name="UpComplete">Sign Up</string>
     <string name="BtnDelete">Delete</string>
-    <string name="BtnDelete">Delete</string>
+    <string name="addTname">Car Make</string>
+    <string name="addTmodel">Car model</string>
+    <string name="addTyear">Car Year</string>
+    <string name="addTprice">Price</string>
+    <string name="addTcolour">Car Colour</string>
 </resources>
