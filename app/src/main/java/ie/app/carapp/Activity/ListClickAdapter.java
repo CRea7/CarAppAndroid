@@ -9,22 +9,16 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import ie.app.carapp.R;
 import ie.app.carapp.models.Car;
 
+public class ListClickAdapter extends ArrayAdapter<Car> {
 
-public class CustomListview extends ArrayAdapter<Car>{
+    private Context context;
+    public List<Car> cars;
 
-
-    private Context        context;
-    public List<Car>        cars = null;
-    private ArrayList<Car> arrayList;
-
-
-
-    public CustomListview(Context context, ArrayList<Car> cars) {
+    public ListClickAdapter(Context context, ArrayList<Car> cars) {
         super(context, R.layout.layout, cars);
         this.context = context;
         this.cars = cars;
@@ -52,10 +46,12 @@ public class CustomListview extends ArrayAdapter<Car>{
             convertView= LayoutInflater.from(context).inflate(R.layout.layout,parent,false);
         }
 
-        TextView Cmodel = convertView.findViewById(R.id.textViewModel);
-        TextView Ccolour = convertView.findViewById(R.id.textViewColour);
-        TextView CYear = convertView.findViewById(R.id.textViewYear);
-        TextView CMake = convertView.findViewById(R.id.textViewMake);
+        TextView Cmodel = convertView.findViewById(R.id.ClickDisModel);
+        TextView Ccolour = convertView.findViewById(R.id.ClickDisMake);
+        TextView CYear = convertView.findViewById(R.id.ClickDisYear);
+        TextView CMake = convertView.findViewById(R.id.ClickDisMake);
+        TextView Cprice = convertView.findViewById(R.id.ClickDisPrice);
+        TextView CDes = convertView.findViewById(R.id.ClickDisDes);
 
         final Car s= (Car) this.getItem(position);
 
@@ -63,30 +59,10 @@ public class CustomListview extends ArrayAdapter<Car>{
         Ccolour.setText(s.getCarColour());
         CYear.setText(s.getCarYear());
         CMake.setText(s.getCarMake());
+        CDes.setText(s.getDes());
+        Cprice.setText(s.getCarPrice());
 
 
         return convertView;
     }
-
-    public void filter(String charText){
-        charText = charText.toLowerCase(Locale.getDefault());
-        cars.clear();
-        if (charText.length() == 0) {
-            cars.addAll(arrayList);
-        }
-        else{
-
-            for (Car cl : arrayList)
-            {
-                if (cl.getCarname().toLowerCase(Locale.getDefault()).contains(charText))
-                {
-                    cars.add(cl);
-                }
-            }
-        }
-        notifyDataSetChanged();
-        }
-
-    }
-
-
+}

@@ -3,6 +3,8 @@ package ie.app.carapp.models;
 
 public class Car {
 
+    private long id =0;
+    private static long counter;
     private String carname;
     private String carColour;
     private String carMake;
@@ -29,6 +31,7 @@ public class Car {
         this.carPrice = carPrice;
         this.des = des;
         this.imgid = imgid;
+        this.id = counter++;
     }
 
     public String getCarname() {

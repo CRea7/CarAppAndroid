@@ -55,4 +55,18 @@
     <string name="LayoutColour">Colour:</string>
     <string name="textViewColour">ColourHere</string>
     <string name="LayOutYear">Year:</string>
+    <string name="action_Home">Home</string>
+    <string name="SignWhyNot">Dont Have An Account Why not sign up</string>
+    <string name="ClickMake">Car Make:</string>
+    <string name="ClickDisMake">MakeHere</string>
+    <string name="ClickDisModel">ModelHere</string>
+    <string name="ClickModel">Car Model:</string>
+    <string name="ClickPrice">Price:</string>
+    <string name="ClickDisPrice">PriceHere</string>
+    <string name="ClickYear">Year:</string>
+    <string name="ClickDisYear">YearHere</string>
+    <string name="ClickColour">Colour:</string>
+    <string name="ClickDisColour">ColourHere</string>
+    <string name="ClickDes">Description:</string>
+    <string name="ClickDisDes">DesHere</string>
 </resources>

@@ -273,9 +273,9 @@ public class AddActivity extends AppCompatActivity{
     {
         switch (item.getItemId())
         {
-            case R.id.action_Search : startActivity (new Intent(this, SearchActivity.class));
-                break;
             case R.id.action_AddCar: startActivity (new Intent (this, AddActivity.class));
+                break;
+            case R.id.action_Home: startActivity(new Intent (this, MainActivity.class));
                 break;
             case R.id.action_SignIn: startActivity (new Intent (this, SignInUp.class));
                 break;
@@ -294,8 +294,6 @@ public class AddActivity extends AppCompatActivity{
         MenuItem signIn = menu.findItem(R.id.action_SignIn);
         MenuItem logOut = menu.findItem(R.id.action_LogOut);
         MenuItem addCar = menu.findItem(R.id.action_AddCar);
-        MenuItem search = menu.findItem(R.id.action_Search);
-        MenuItem setting = menu.findItem(R.id.action_settings);
 
         //check to see if there is a user signed in
         FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();

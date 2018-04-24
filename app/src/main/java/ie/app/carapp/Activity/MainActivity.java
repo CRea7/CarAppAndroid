@@ -4,12 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,6 +25,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 import ie.app.carapp.R;
 import ie.app.carapp.models.Car;
@@ -37,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayAdapter<String> adapter;
     Car car;
     private FirebaseAuth.AuthStateListener mAuthListen;
+    private EditText search;
 
     private ArrayList<String> FirebaseCars = new ArrayList<>();
     private ArrayList<String> Keys = new ArrayList<>();
@@ -52,6 +58,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        search = findViewById(R.id.MainSearch);
+
         car = new Car();
         list = new ArrayList<>();
         db = FirebaseDatabase.getInstance();
@@ -62,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
         final ArrayList<Car> cars = new ArrayList<Car>();
         final CustomListview customListview = new CustomListview(this, cars);
 
+
+        //This is used to get the values from firebase and put them into the cars array list
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -74,22 +84,122 @@ public class MainActivity extends AppCompatActivity {
                                                     String make = value.getCarMake();
                                                     String year = value.getCarYear();
                                                     String Colour = value.getCarColour();
+                                                    String Price = value.getCarPrice();
+                                                    String Description = value.getDes();
                                                     car.setCarname(name);
                                                     car.setCarMake(make);
                                                     car.setCarYear(year);
                                                     car.setCarColour(Colour);
+                                                    car.setCarPrice(Price);
+                                                    car.setDes(Description);
                                                     cars.add(car);
                 }
+                //The adapter displays all the information from firebase
                 List.setAdapter(customListview);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
+
             }
         });
 
-        //This is code for a failed Recycler view to attepmt to fix the ugly UI.
+       // sends data to the list activity so it can be displayed
+
+
+        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                mDatabase.removeValue();
+                finish();
+                startActivity(getIntent());
+
+                return false;
+            }
+        });
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+                String text = search.getText().toString().toLowerCase(Locale.getDefault());
+                customListview.filter(text);
+            }
+        });
+    }
+
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+
+    //this is what allows the menu to work
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)
+    {
+        switch (item.getItemId())
+        {
+            case R.id.action_AddCar: startActivity (new Intent (this, AddActivity.class));
+                break;
+            case R.id.action_Home: startActivity(new Intent (this, MainActivity.class));
+                break;
+            case R.id.action_SignIn: startActivity (new Intent (this, SignInUp.class));
+                break;
+            case R.id.action_LogOut: FirebaseAuth.getInstance().signOut();
+                finish();
+                startActivity(getIntent());
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu (Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        MenuItem signIn = menu.findItem(R.id.action_SignIn);
+        MenuItem logOut = menu.findItem(R.id.action_LogOut);
+        MenuItem addCar = menu.findItem(R.id.action_AddCar);
+
+        //check to see if there is a user signed in
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user != null) {
+            //if user is signed in it wont show sign in option
+            signIn.setEnabled(false);
+            signIn.setVisible(false);
+
+        }
+        else
+        {
+            //if user is logged in will give them the option to log out
+            logOut.setEnabled(false);
+            logOut.setVisible(false);
+        }
+
+        return true;
+    }
+
+}
+
+
+//possibly useful code graveyard
 
 //        recyclerView = findViewById(R.id.recyclerView);
 //        recyclerView.setHasFixedSize(true);
@@ -143,7 +253,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //sends data to the list activity so it can be displayed
+//sends data to the list activity so it can be displayed
 //       List.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 //           @Override
 //            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -160,65 +270,3 @@ public class MainActivity extends AppCompatActivity {
 //                return false;
 //            }
 //        });
-
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-
-    //this is what allows the menu to work
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item)
-    {
-        switch (item.getItemId())
-        {
-            case R.id.action_Search : startActivity (new Intent(this, SearchActivity.class));
-               break;
-            case R.id.action_AddCar: startActivity (new Intent (this, AddActivity.class));
-                break;
-            case R.id.action_SignIn: startActivity (new Intent (this, SignInUp.class));
-                break;
-            case R.id.action_LogOut: FirebaseAuth.getInstance().signOut();
-                finish();
-                startActivity(getIntent());
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public boolean onPrepareOptionsMenu (Menu menu) {
-        super.onPrepareOptionsMenu(menu);
-
-        MenuItem signIn = menu.findItem(R.id.action_SignIn);
-        MenuItem logOut = menu.findItem(R.id.action_LogOut);
-        MenuItem addCar = menu.findItem(R.id.action_AddCar);
-        MenuItem search = menu.findItem(R.id.action_Search);
-        MenuItem setting = menu.findItem(R.id.action_settings);
-
-        //check to see if there is a user signed in
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        if (user != null) {
-            //if user is signed in it wont show sign in option
-            signIn.setEnabled(false);
-            signIn.setVisible(false);
-
-        }
-        else
-        {
-            //if user is logged in will give them the option to log out
-            logOut.setEnabled(false);
-            logOut.setVisible(false);
-        }
-
-        return true;
-    }
-
-}
