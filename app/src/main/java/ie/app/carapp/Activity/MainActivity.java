@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -69,6 +70,8 @@ public class MainActivity extends AppCompatActivity {
 
         final ArrayList<Car> cars = new ArrayList<Car>();
         final CustomListview customListview = new CustomListview(this, cars);
+
+        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 
 
         //This is used to get the values from firebase and put them into the cars array list
