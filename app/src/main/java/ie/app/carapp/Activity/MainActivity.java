@@ -113,17 +113,17 @@ public class MainActivity extends AppCompatActivity {
        // sends data to the list activity so it can be displayed
 
 
-//        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-//            @Override
-//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-//
-//                mDatabase.car[i].removeValue();
-//                finish();
-//                startActivity(getIntent());
-//
-//                return false;
-//            }
-//        });
+        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                mDatabase.child(cars.get(i).getId()).removeValue();
+                finish();
+                startActivity(getIntent());
+
+                return false;
+            }
+        });
 
 //        search.addTextChangedListener(new TextWatcher() {
 //            @Override
