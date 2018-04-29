@@ -3,8 +3,7 @@ package ie.app.carapp.models;
 
 public class Car {
 
-    private long id =0;
-    private static long counter;
+    private String id;
     private String carname;
     private String carColour;
     private String carMake;
@@ -23,7 +22,7 @@ public class Car {
         this.carYear = carYear;
     }
 
-    public Car(String carname, String carColour, String carMake, String carYear, String carPrice, String des, int imgid) {
+    public Car(String carname, String carColour, String carMake, String carYear, String carPrice, String des, int imgid, String id) {
         this.carname = carname;
         this.carColour = carColour;
         this.carMake = carMake;
@@ -31,7 +30,7 @@ public class Car {
         this.carPrice = carPrice;
         this.des = des;
         this.imgid = imgid;
-        this.id = counter++;
+        this.id = id;
     }
 
     public String getCarname() {
@@ -88,6 +87,14 @@ public class Car {
 
     public void setImgid(int imgid) {
         this.imgid = imgid;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     @Override

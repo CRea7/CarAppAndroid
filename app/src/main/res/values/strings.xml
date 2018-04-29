@@ -69,4 +69,5 @@
     <string name="ClickDisColour">ColourHere</string>
     <string name="ClickDes">Description:</string>
     <string name="ClickDisDes">DesHere</string>
+    <string name="addTColour">Colour</string>
 </resources>

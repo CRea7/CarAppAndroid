@@ -38,7 +38,7 @@ public class AddActivity extends AppCompatActivity{
     private DatabaseReference mDatabase;
     private Button addButton;
     private Spinner addCar;
-    private EditText addColour;
+    private Spinner addColour;
     private EditText addDes;
     private Spinner addMake;
     private EditText addPrice;
@@ -67,12 +67,21 @@ public class AddActivity extends AppCompatActivity{
         final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
         //setting the dropdown menu up
+
+        //adapter for car makes
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.CarMakes_array, android.R.layout.simple_spinner_dropdown_item);
         addMake.setAdapter(adapter);
 
+        //adapter for Year
         ArrayAdapter<CharSequence> Year = ArrayAdapter.createFromResource(this, R.array.years_array, android.R.layout.simple_spinner_dropdown_item);
         addYear.setAdapter(Year);
 
+        //adapter for colours
+        ArrayAdapter<CharSequence> Colour = ArrayAdapter.createFromResource(this, R.array.Colours, android.R.layout.simple_spinner_dropdown_item);
+        addColour.setAdapter(Colour);
+
+
+        //changes model based on make
         addMake.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -212,13 +221,14 @@ public class AddActivity extends AppCompatActivity{
         });
 
 
+        //when thew add button is pressed it checks to see if all fields are filled then if you are logged in if both are true it will add the car to the list and send you back to the main screen
         addButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
                 //Create child in root object
                 //assign a value to the child
-                if (addCar.getSelectedItem().toString().isEmpty() || addColour.getText().toString().isEmpty() || addMake.getSelectedItem().toString().isEmpty() || addYear.getSelectedItem().toString().isEmpty()
+                if (addCar.getSelectedItem().toString().isEmpty() || addColour.getSelectedItem().toString().isEmpty() || addMake.getSelectedItem().toString().isEmpty() || addYear.getSelectedItem().toString().isEmpty()
                         || addPrice.getText().toString().isEmpty() || addDes.getText().toString().isEmpty()) {
                     Toast.makeText(AddActivity.this, "Please fill in all fields...", Toast.LENGTH_LONG).show();
                 } else
@@ -230,7 +240,7 @@ public class AddActivity extends AppCompatActivity{
 
                 {
                     String Cname = addCar.getSelectedItem().toString();
-                String Ccolour = addColour.getText().toString();
+                String Ccolour = addColour.getSelectedItem().toString();
                 String CMake = addMake.getSelectedItem().toString();
                 String CYear = addYear.getSelectedItem().toString();
                 String CPrice = addPrice.getText().toString();
@@ -261,6 +271,9 @@ public class AddActivity extends AppCompatActivity{
         });
     }
 
+
+
+    //toolbar settings below
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

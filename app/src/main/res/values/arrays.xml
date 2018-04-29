@@ -933,4 +933,32 @@
         <item>2018</item>
     </string-array>
 
+    <string-array name="Colours">
+
+        <item>Red</item>
+        <item>Orange</item>
+        <item>Yellow</item>
+        <item>Green</item>
+        <item>Blue</item>
+        <item>Purple</item>
+        <item>Pink</item>
+        <item>Silver</item>
+        <item>Gray</item>
+        <item>Black</item>
+        <item>White</item>
+        <item>Cream</item>
+        <item>Gold</item>
+        <item>Olive</item>
+        <item>Beige</item>
+        <item>Cyan</item>
+        <item>Lime</item>
+        <item>Lilac</item>
+        <item>Magenta</item>
+        <item>Navy blue</item>
+        <item>Maroon</item>
+        <item>indigo</item>
+        <item>Violet</item>
+
+
+    </string-array>
 </resources>

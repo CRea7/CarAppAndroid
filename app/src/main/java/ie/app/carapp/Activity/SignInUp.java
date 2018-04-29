@@ -26,7 +26,7 @@ public class SignInUp extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPass;
     private Button mLog;
-    private Button mUp;
+   // private Button mUp;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListen;
 
@@ -43,15 +43,15 @@ public class SignInUp extends AppCompatActivity {
         mPass = findViewById(R.id.SignPass);
         mLog = findViewById(R.id.SignButton);
         mAuth = FirebaseAuth.getInstance();
-        mUp = findViewById(R.id.SignUpBtn);
+        //mUp = findViewById(R.id.SignUpBtn);
 
-       mUp.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-
-               launchActivity();
-           }
-       });
+//       mUp.setOnClickListener(new View.OnClickListener() {
+//           @Override
+//           public void onClick(View view) {
+//
+//               launchActivity();
+//           }
+//       });
 
 
 

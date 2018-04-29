@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        search = findViewById(R.id.MainSearch);
+       // search = findViewById(R.id.MainSearch);
 
         car = new Car();
         list = new ArrayList<>();
@@ -89,12 +89,14 @@ public class MainActivity extends AppCompatActivity {
                                                     String Colour = value.getCarColour();
                                                     String Price = value.getCarPrice();
                                                     String Description = value.getDes();
+                                                    String id = ds.getKey();
                                                     car.setCarname(name);
                                                     car.setCarMake(make);
                                                     car.setCarYear(year);
                                                     car.setCarColour(Colour);
                                                     car.setCarPrice(Price);
                                                     car.setDes(Description);
+                                                    car.setId(id);
                                                     cars.add(car);
                 }
                 //The adapter displays all the information from firebase
@@ -111,37 +113,37 @@ public class MainActivity extends AppCompatActivity {
        // sends data to the list activity so it can be displayed
 
 
-        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//        List.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+//            @Override
+//            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+//
+//                mDatabase.car[i].removeValue();
+//                finish();
+//                startActivity(getIntent());
+//
+//                return false;
+//            }
+//        });
 
-                mDatabase.removeValue();
-                finish();
-                startActivity(getIntent());
-
-                return false;
-            }
-        });
-
-        search.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-                String text = search.getText().toString().toLowerCase(Locale.getDefault());
-                customListview.filter(text);
-            }
-        });
-    }
+//        search.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//
+//                String text = search.getText().toString().toLowerCase(Locale.getDefault());
+//                customListview.filter(text);
+//            }
+//        });
+     }
 
 
 
